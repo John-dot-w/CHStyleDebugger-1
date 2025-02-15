@@ -5,7 +5,7 @@ QT       += core gui widgets printsupport
 TARGET = CHStyleDebugger
 TEMPLATE = lib
 CONFIG += plugin
-CONFIG += c++11
+CONFIG += c++17
 #enabled catch
 CONFIG += exceptions
 

@@ -16,8 +16,6 @@
  */
 
 #include <QEventLoop>
-#include <QRegExp>
-
 #include "Qsci/qsciapis.h"
 
 #include "qscilexerqss.h"
@@ -29,7 +27,7 @@ QsciLexerQSS::QsciLexerQSS(QObject *parent)
 
     const QString stringKeywords = QString(keywords(1)) + keywords(2);
 
-    QStringList listKeywords = stringKeywords.split(QRegExp("\\s+"), QString::SkipEmptyParts);
+    QStringList listKeywords = stringKeywords.split(" ", Qt::SkipEmptyParts);
 
     // Qt classes
     listKeywords

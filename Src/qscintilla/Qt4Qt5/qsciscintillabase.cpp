@@ -29,8 +29,6 @@
 #include <qclipboard.h>
 #include <qcolor.h>
 #include <qscrollbar.h>
-#include <qtextcodec.h>
-
 #include <QContextMenuEvent>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
@@ -601,7 +599,7 @@ void QsciScintillaBase::mousePressEvent(QMouseEvent *e)
 
         sci->ButtonDown(pt, clickTime, shift, ctrl, alt);
     }
-    else if (e->button() == Qt::MidButton)
+    else if (e->button() == Qt::MiddleButton)
     {
         QClipboard *cb = QApplication::clipboard();
 

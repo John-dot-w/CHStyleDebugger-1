@@ -601,8 +601,15 @@ void QsciAPIs::autoCompletionSelected(const QString &selection)
         // Remove the parenthesis.
         owords = path.mid(1, path.length() - 2);
     }
-
-    origin = qLowerBound(prep->raw_apis, owords);
+    QStringList::const_iterator it;
+    for (it = prep->raw_apis.begin(); it != prep->raw_apis.end(); it++)
+    {
+        if (*it == owords)
+        {
+            origin = it;
+            break;
+        }
+    }
     /*
      * There is a bug somewhere, either in qLowerBound() or QList (or in GCC as
      * it seems to be Linux specific and the Qt code is the same on all

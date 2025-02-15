@@ -380,8 +380,7 @@ bool QsciLexer::readSettings(QSettings &qs,const char *prefix)
         // Ignore invalid styles.
         if (description(i).isEmpty())
             continue;
-
-        key.sprintf("%s/%s/style%d/",prefix,language(),i);
+        key = QString("%1/%2/style%3/").arg(QString(prefix)).arg(QString(language())).arg(QString::number(i));
 
         // Read the foreground colour.
         full_key = key + "color";
@@ -439,7 +438,7 @@ bool QsciLexer::readSettings(QSettings &qs,const char *prefix)
     }
 
     // Read the properties.
-    key.sprintf("%s/%s/properties/",prefix,language());
+    key = QString("%1/%2/properties/").arg(QString(prefix)).arg(QString(language()));
 
     if (!readProperties(qs,key))
         rc = false;
@@ -447,7 +446,7 @@ bool QsciLexer::readSettings(QSettings &qs,const char *prefix)
     refreshProperties();
 
     // Read the rest.
-    key.sprintf("%s/%s/",prefix,language());
+    key = QString("%1/%2/").arg(QString(prefix)).arg(QString(language()));
 
     // Read the default foreground colour.
     full_key = key + "defaultcolor";
@@ -524,8 +523,7 @@ bool QsciLexer::writeSettings(QSettings &qs,const char *prefix) const
             continue;
 
         QColor c;
-
-        key.sprintf("%s/%s/style%d/",prefix,language(),i);
+        key = QString("%1/%2/style%3/").arg(QString(prefix)).arg(QString(language())).arg(QString::number(i));
 
         // Write the foreground colour.
         c = color(i);
@@ -558,13 +556,13 @@ bool QsciLexer::writeSettings(QSettings &qs,const char *prefix) const
     }
 
     // Write the properties.
-    key.sprintf("%s/%s/properties/",prefix,language());
+    key = QString("%1/%2/properties/").arg(QString(prefix)).arg(language());
 
     if (!writeProperties(qs,key))
         rc = false;
 
     // Write the rest.
-    key.sprintf("%s/%s/",prefix,language());
+    key = QString("%1/%2/").arg(QString(prefix)).arg(language());
 
     // Write the default foreground colour.
     num = (defColor.red() << 16) | (defColor.green() << 8) | defColor.blue();

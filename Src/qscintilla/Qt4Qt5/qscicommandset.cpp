@@ -858,8 +858,7 @@ bool QsciCommandSet::readSettings(QSettings &qs, const char *prefix)
     {
         QsciCommand *cmd = cmds.at(i);
 
-        skey.sprintf("%s/keymap/c%d/", prefix,
-                static_cast<int>(cmd->command()));
+        skey = QString("%1/keymap/c%2/").arg(QString(prefix)).arg(QString::number(static_cast<int>(cmd->command())));
 
         int key;
         bool ok;
@@ -896,9 +895,7 @@ bool QsciCommandSet::writeSettings(QSettings &qs, const char *prefix)
     for (int i = 0; i < cmds.count(); ++i)
     {
         QsciCommand *cmd = cmds.at(i);
-
-        skey.sprintf("%s/keymap/c%d/", prefix,
-                static_cast<int>(cmd->command()));
+        skey = QString("%1/keymap/c%2/").arg(QString(prefix)).arg(QString::number(static_cast<int>(cmd->command())));
 
         // Write the key.
         qs.setValue(skey + "key", cmd->key());

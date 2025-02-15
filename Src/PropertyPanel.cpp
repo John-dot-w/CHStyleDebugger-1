@@ -10,7 +10,6 @@
 #include "AppContext.h"
 #include "ConvertQtTypee.h"
 #include <QDebug>
-#include <QDesktopWidget>
 
 CPropertyPanel::CPropertyPanel(QWidget *parent) :
     QWidget(parent),
@@ -108,7 +107,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
             connect(p, &QCheckBox::clicked, pW, [pW, p, pLblName, this]()
             {
                 changedInfo(pW, pLblName->text(), p->isChecked());
-            }, Qt::UniqueConnection);
+            });
             break;
         }
         case QVariant::Int:
@@ -133,7 +132,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                 {
                     int nValue = me.keyToValue(p->currentText().toLocal8Bit().data());
                     changedInfo(pW, pLblName->text(), nValue);
-                }, Qt::UniqueConnection);
+                });
                 break;
             }
 
@@ -145,7 +144,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
             connect(p, &QLineEdit::editingFinished, pW, [pW, p, pLblName, this]()
             {
                 changedInfo(pW, pLblName->text(), p->text().trimmed());
-            }, Qt::UniqueConnection);
+            });
             break;
         }
 
@@ -157,7 +156,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
             connect(p, &QLineEdit::editingFinished, pW, [pW, p, pLblName, this]()
             {
                 changedInfo(pW, pLblName->text(), p->text().trimmed());
-            }, Qt::UniqueConnection);
+            });
             break;
         }
         case QVariant::Rect:
@@ -170,7 +169,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                 connect(p, &QLineEdit::editingFinished, pW, [pW, p, pLblName, this]()
                 {
                     changedInfo(pW, pLblName->text(), string2Rect(p->text().trimmed()));
-                }, Qt::UniqueConnection);
+                });
             }
             else
             {
@@ -178,7 +177,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                 connect(p, &QLineEdit::editingFinished, pW, [pW, p, pLblName, this]()
                 {
                     changedInfo(pW, pLblName->text(), string2RectF(p->text().trimmed()));
-                }, Qt::UniqueConnection);
+                });
             }
             ly->addWidget(p);
             break;
@@ -193,7 +192,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                 connect(p, &QLineEdit::editingFinished, pW, [pW, p, pLblName, this]()
                 {
                     changedInfo(pW, pLblName->text(), string2Point(p->text().trimmed()));
-                }, Qt::UniqueConnection);
+                });
             }
             else
             {
@@ -201,7 +200,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                 connect(p, &QLineEdit::editingFinished, pW, [pW, p, pLblName, this]()
                 {
                     changedInfo(pW, pLblName->text(), string2PointF(p->text().trimmed()));
-                }, Qt::UniqueConnection);
+                });
             }
             ly->addWidget(p);
             break;
@@ -214,7 +213,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
             connect(p, &QLineEdit::editingFinished, pW, [pW, p, pLblName, this]()
             {
                 changedInfo(pW, pLblName->text(), string2Size(p->text().trimmed()));
-            }, Qt::UniqueConnection);
+            });
             ly->addWidget(p);
             break;
         }
@@ -275,7 +274,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                     }
                     layout->setObjectName(p->text().trimmed());
                     printLog();
-                }, Qt::UniqueConnection);
+                });
                 ly->addWidget(p);
                 ui->vlayPropery->addWidget(pLayoutInfo);
             }
@@ -305,7 +304,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                     }
                     layout->setContentsMargins(string2Margins(p->text().trimmed()));
                     printLog();
-                }, Qt::UniqueConnection);
+                });
                 ly->addWidget(p);
                 ui->vlayPropery->addWidget(pLayoutInfo);
             }
@@ -338,7 +337,7 @@ void CPropertyPanel::setWidget(QWidget *pW)
                     }
                     layout->setSpacing(p->text().trimmed().toInt());
                     printLog();
-                }, Qt::UniqueConnection);
+                });
                 ly->addWidget(p);
                 ui->vlayPropery->addWidget(pLayoutInfo);
             }
@@ -429,7 +428,7 @@ void CPropertyPanel::showEvent(QShowEvent* event)
     if (!m_hasMove)
     {
         //默认右上角
-        QRect rect = qApp->desktop()->screenGeometry();
+        QRect rect = QGuiApplication::primaryScreen()->geometry();
         move(rect.width() - width() - 30, 100);
         m_hasMove = true;
     }

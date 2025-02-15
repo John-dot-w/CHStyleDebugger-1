@@ -6,7 +6,7 @@ CHPushButton::CHPushButton(QWidget* parent)
 
 }
 
-void CHPushButton::enterEvent(QEvent* event)
+void CHPushButton::enterEvent(QEnterEvent* event)
 {
     Q_EMIT hovered(true);
     QPushButton::enterEvent(event);

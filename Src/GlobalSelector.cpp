@@ -12,6 +12,7 @@
 #include "Resources.h"
 #include "AppContext.h"
 #include <QLabel>
+#include <QPointer>
 #include "ObjectInfoMenu.h"
 
 class CGlobalSelectorPrivate
@@ -243,16 +244,10 @@ bool CGlobalSelector::eventFilter(QObject *obj, QEvent *event)
 
             for (int i = 0; i < lsObjects.length(); ++i)
             {
-                QWidget* widgetItem = lsWidgets.at(i);
+                QPointer<QWidget> widgetItem = lsWidgets.at(i);
                 m_p->m_pObjectMenu->addWidget(widgetItem);
                 //释放的时候设置指针
-                connect(widgetItem, &QWidget::destroyed, this, [this, widgetItem]()
-                {
-                    if (m_p->m_pLastObj == widgetItem)
-                    {
-                        m_p->m_pLastObj = Q_NULLPTR;
-                    }
-                }, Qt::UniqueConnection);
+                //connect(widgetItem, &QWidget::destroyed, this, &CGlobalSelector::realse, Qt::UniqueConnection);
             }
 
             if (m_p->m_pObjectMenu->exec(QCursor::pos()) == Q_NULLPTR)

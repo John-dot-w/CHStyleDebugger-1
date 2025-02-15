@@ -9,7 +9,6 @@
 #include <Windows.h>
 #endif
 #include <QCloseEvent>
-#include <QDesktopWidget>
 #include "CHBaseDialog.h"
 #include "ui_CHBaseDialog.h"
 
@@ -231,7 +230,8 @@ int CHBaseDialog::getResizeWidth() const
 void CHBaseDialog::setShadowEffectVisible(bool bVisible)
 {
     m_bShadowEffectVisible = bVisible;
-    ui->vlayDlgMain->setMargin(bVisible ? M_CONFIG_SHADOW_WIDTH : 0);
+    int margin = bVisible ? M_CONFIG_SHADOW_WIDTH : 0;
+    ui->vlayDlgMain->setContentsMargins(margin, margin, margin, margin);
 }
 
 //获取是否显示阴影效果
@@ -243,7 +243,8 @@ bool CHBaseDialog::isShadowEffectVisible() const
 //获取阴影效果宽度
 int CHBaseDialog::getShadowEffectWidth() const
 {
-    return ui->vlayDlgMain->margin();
+    int margin = m_bShadowEffectVisible ? M_CONFIG_SHADOW_WIDTH : 0;
+    return margin;
 }
 
 //获取功能窗口
@@ -364,17 +365,12 @@ void CHBaseDialog::adjustPosition(QWidget* parent)
     QRect rectDesktop;
     if (parent != Q_NULLPTR)
     {
-        nScrn = QApplication::desktop()->screenNumber(parent);
-    }
-    else if (QApplication::desktop()->isVirtualDesktop())
-    {
-        nScrn = QApplication::desktop()->screenNumber(QCursor::pos());
+        rectDesktop = parent->screen()->availableGeometry();
     }
     else
     {
-        nScrn = QApplication::desktop()->screenNumber(this);
+        rectDesktop = screen()->availableGeometry();
     }
-    rectDesktop = QApplication::desktop()->availableGeometry(nScrn);
 
     QWidgetList lstWidget = QApplication::topLevelWidgets();
     for (int i = 0; (0 == nExtraW || 0 == nExtraH) && i < lstWidget.size(); ++i)
@@ -715,12 +711,13 @@ void CHBaseDialog::changeEvent(QEvent* event)
     {
         if (isMaximized())
         {
-            ui->vlayDlgMain->setMargin(0);
+            ui->vlayDlgMain->setContentsMargins(0, 0, 0, 0);
             ui->btnDlgMax->setStyleSheet(m_strRestoreStyleSheet);
         }
         else
         {
-            ui->vlayDlgMain->setMargin(m_bShadowEffectVisible ? M_CONFIG_SHADOW_WIDTH : 0);
+            int margin = m_bShadowEffectVisible ? M_CONFIG_SHADOW_WIDTH : 0;
+            ui->vlayDlgMain->setContentsMargins(margin, margin, margin, margin);
             ui->btnDlgMax->setStyleSheet(m_strMaxStyleSheet);
         }
     }

@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QKeyCombination>
 #include "AppContext.h"
 #include "StyleDebugger.h"
 
@@ -223,7 +224,7 @@ bool AppContext::eventFilter(QObject* obj, QEvent *event)
         return QObject::eventFilter(obj, event);
     }
 
-    QKeySequence tmp = QKeySequence(pKeyEvent->modifiers() + pKeyEvent->key());
+    QKeySequence tmp = QKeySequence(pKeyEvent->modifiers() | pKeyEvent->key());
     QString strKey = tmp.toString().toUpper();
 
     if (m_softwareConfig.mainShortcut.remove("").toUpper() == strKey)

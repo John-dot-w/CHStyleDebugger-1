@@ -11,13 +11,11 @@
 #include <QDebug>
 #include <QTimer>
 #include <QFile>
-#include <QTextCodec>
 #include <QKeyEvent>
 #include <QTextStream>
 #include <QTimer>
 #include <QFileInfo>
 #include <QDateTime>
-#include <QDesktopWidget>
 #include <QDesktopServices>
 
 #include <QMenu>
@@ -179,7 +177,7 @@ void CQssEditor::init()
                 QTextStream out(&fi);
                 // utf-8 bom
                 out.setGenerateByteOrderMark(true);
-                out.setCodec("UTF-8");
+                out.setEncoding(QStringConverter::Utf8);
                 out << text->text();
             }
 
@@ -665,7 +663,7 @@ bool CQssEditor::eventFilter(QObject *obj, QEvent *event)
                 QTextStream out(&fi);
                 // utf-8 bom
                 out.setGenerateByteOrderMark(true);
-                out.setCodec("UTF-8");
+                out.setEncoding(QStringConverter::Utf8);
                 out << text->text();
 
                 CHMessageToast::success(this, tr("保存成功。"));
@@ -708,7 +706,7 @@ void CQssEditor::showEvent(QShowEvent* event)
     if (!m_hasMove)
     {
         //默认右上角
-        QRect rect = qApp->desktop()->screenGeometry();
+        QRect rect = QGuiApplication::primaryScreen()->geometry();
         move(rect.width() - width() - 20, 120);
         m_hasMove = true;
     }
@@ -807,8 +805,7 @@ QsciScintilla* CQssEditor::openFileInSoftware(const QString& strFileName)
         }
 
         QTextStream in(&fi);
-        QTextCodec* code = QTextCodec::codecForName("UTF-8");
-        in.setCodec(code);
+        in.setEncoding(QStringConverter::Utf8);
         QString qss = in.readAll();
         text->setText(qss);
     }

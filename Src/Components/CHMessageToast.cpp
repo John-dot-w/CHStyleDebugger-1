@@ -6,8 +6,8 @@
 
 #include <QTimer>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QPropertyAnimation>
+#include <QScreen>
 #include "Resources.h"
 #include "CHMessageToast.h"
 #include "ui_CHMessageToast.h"
@@ -102,7 +102,7 @@ void CHMessageToast::showEvent(QShowEvent* event)
     }
     else
     {
-        posGlobal = QApplication::desktop()->screenGeometry().center();
+        posGlobal = QGuiApplication::primaryScreen()->geometry().center();
     }
 
     move(posGlobal - QPoint(width() / 2, height() / 2));

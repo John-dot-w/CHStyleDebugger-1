@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <QStyle>
 #include <QScreen>
-#include <QDesktopWidget>
 #include <QSystemTrayIcon>
 #include "StyleDebugger.h"
 #include "ui_StyleDebugger.h"
@@ -58,7 +57,7 @@ void StyleDebugger::toggleQssEditorVisible()
         if (!m_QssEditorHasMove)
         {
             //默认右上角
-            QRect rect = qApp->desktop()->screenGeometry();
+            QRect rect = QGuiApplication::primaryScreen()->geometry();
             m_pQssEditor->move(rect.width() - m_pQssEditor->width(), height());
             m_QssEditorHasMove = true;
         }
@@ -97,7 +96,7 @@ void StyleDebugger::showEvent(QShowEvent* event)
     if (!m_hasMove)
     {
         //默认右上角
-        QRect rect = qApp->desktop()->screenGeometry();
+        QRect rect = QGuiApplication::primaryScreen()->geometry();
         move(rect.width() - width(), 0);
         m_hasMove = true;
     }

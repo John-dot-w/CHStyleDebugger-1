@@ -190,9 +190,8 @@ QString QsciMacro::save() const
             ms += ' ';
 
         unsigned len = (*it).text.size();
-        QString m;
-
-        ms += m.sprintf("%u %lu %u", (*it).msg, (*it).wParam, len);
+        QString m = QString("%1 %2 %3").arg(QString::number((*it).msg)).arg(QString::number((*it).wParam)).arg(QString::number(len));
+        ms += m;
 
         if (len)
         {
@@ -218,11 +217,13 @@ QString QsciMacro::save() const
                 if (ch == '\\' || ch == '"' || ch <= ' ' || ch >= 0x7f)
                 {
                     QString buf;
+                    buf = QString("\%1").arg(ch, 2, 16, QChar('0'));
+                    ms += buf;
+                    //ms += buf.sprintf("\\%02x", ch);
 
-                    ms += buf.sprintf("\\%02x", ch);
                 }
                 else
-                    ms += ch;
+                    ms += QChar(ch);
             }
         }
     }

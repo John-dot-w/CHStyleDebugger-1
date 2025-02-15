@@ -31,6 +31,7 @@ Q_SIGNALS:
 protected:
     bool eventFilter(QObject* obj, QEvent *event);
 
+
 private:
     CGlobalSelectorPrivate* m_p;
 };
